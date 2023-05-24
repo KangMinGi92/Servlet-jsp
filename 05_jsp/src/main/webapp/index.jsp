@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="views/error/500error.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,5 +85,73 @@
 	<%if(msg.contains("점심")){ %>
 		<h1>점심 맛있게 드세요!!</h1>
 	<%} %>
+	
+	<%
+		String[] hobby={"코딩","독서","게임","등산","취침"};	
+	%>
+		<%for(String h:hobby){ %>
+			<input type="checkbox" name="hobby" value="<%=h %>"<%=h.equals("코딩")?"checked":""%>><%=h %>
+		<%} %>
+		
+		<h3>jsp내장객체에 대해 알아보자</h3>
+		<p>
+			서블릿에서 데이터를 저장하거나 정보를 가져왔던 객체를 지역변수로 가지고있음<br>
+			HttpServletRequest : request
+			HttpServletResponse : response
+			HttpSession : session
+			ServletContext : application
+			Cookie : request.getCookies()
+			Header : request.getHeader()
+			PrintWriter : out
+		</p>
+	<h3>request : <%=request %></h3>
+	<h3>response : <%=response %></h3>
+	<h3>session : <%=session %></h3>
+	<h3>servletContext : <%=application %></h3>
+	<h3>jspOut : <%=out %></h3>
+	
+	<h3>contextRoot는 <%=request.getContextPath() %></h3>
+	<h3>요청주소 : <%=request.getRequestURL() %></h3>
+	<h3>요청주소 : <%=request.getRequestURI() %></h3>
+	
+	<h3>내장객체에 저장된 데이터 활용하기</h3>
+	<h4>
+		<a href="<%=request.getContextPath()%>/views/datasave.jsp">데이터 저장</a>
+	</h4>
+	
+	<h3>지시자태그 이용하기</h3>
+	<h4>include태그 이용하기</h4>
+	<p>
+		include태그는 다른 jsp내용을 합쳐서 출력하는것<br>
+		공통페이지를 반영할 때 사용(header, footer, aside)<br>
+	</p>
+	<h3>
+		<a href="<%=request.getContextPath()%>/views/main.jsp">
+			메인화면
+		</a>
+	</h3>
+	
+	<h4>page태그 속성알아보기</h4>
+	<p>
+		import : 외부패키지에 있는 클래스를 이용할때 import해줘야한다.<br> 
+				""안에 작성, 여러클래스를 호출할때는 ,로 구분한다.<br>
+		errorPage : 페이지에서 에러가 발생했을때(500) 연결될 페이지 지정할때 사용 <br>
+		isErrorPage : 에러를 출력하는 페이지에 설정, 설정하면 exception 객체를 이용할 수 있음<br>
+		session : 세션객체를 자동생성할지 생성하지 않을지 결정<br>
+	</p>
+	
+	<h3>에러페이지 설정하기</h3>
+	<h3>
+		<a href="<%=request.getContextPath()%>/views/errortest.jsp">
+			에러발생페이지 이동!
+		</a>
+	</h3>
+	
+	<h3>
+		<a href="<%=request.getContextPath()%>/errorServlet.do">
+			서블릿에러!!!
+		</a>
+	</h3>
+	
 </body>
 </html>
