@@ -51,6 +51,17 @@ public class UseCookieServlet extends HttpServlet {
 		HttpSession session=request.getSession(false);
 		String data=(String)session.getAttribute("data");
 		System.out.println(data);
+		
+		
+		//context-param으로 등록된 데이터 가져오기
+		String contextData=getServletContext().getInitParameter("admin");
+		System.out.println(contextData);
+		
+		
+		//서블릿 초기화 데이터 이용하기(이 서블릿에는 web.xml에 init-param으로 초기값 데이터를 적어주지 않아서 데이터를 불러올 수 없다.)
+		String servletdata=getInitParameter("servletdata");
+		System.out.println(servletdata);
+		
 	}
 
 	/**
