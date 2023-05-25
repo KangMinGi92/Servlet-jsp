@@ -17,7 +17,7 @@
 	<h3>session : <%=sessiondata %></h3>
 	<h3>context : <%=context %></h3>
 	
-	<%if(!list.isEmpty()&&!list.isEmpty()){
+	<%if(list!=null&&!list.isEmpty()){
 		for(Animal a:list) {%>
 		<p><%=a%></p>
 		<%}

@@ -153,5 +153,11 @@
 		</a>
 	</h3>
 	
+	<h3>
+		<a href="<%=request.getContextPath()%>/memberAll.do">
+			회원정보조회
+		</a>
+	</h3>
+	
 </body>
 </html>

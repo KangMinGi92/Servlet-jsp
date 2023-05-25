@@ -4,6 +4,26 @@
 		"oracle_thin-1884b524692-4da12aa3eacddc6f": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
+			"name": "student",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "1521",
+				"database": "XE",
+				"url": "jdbc:oracle:thin:@localhost:1521:XE",
+				"configurationType": "MANUAL",
+				"home": "C:\\app\\GDJ\\product\\18.0.0\\dbhomeXE",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-connection-type@": "BASIC",
+					"@dbeaver-sid-service@": "SID"
+				},
+				"auth-model": "oracle_native"
+			}
+		},
+		"oracle_thin-188516eb416-5fc435684dd609f2": {
+			"provider": "oracle",
+			"driver": "oracle_thin",
 			"name": "localhost",
 			"save-password": true,
 			"configuration": {
