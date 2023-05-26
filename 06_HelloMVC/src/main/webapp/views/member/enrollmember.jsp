@@ -106,12 +106,6 @@
 			return false;
 		}
 	}
-	const idCheck=()=>{
-		if($("#userId_").val().length<4){
-			const $p=$("p").text("아이디는 4글자 이상 입력해주세요");
-			$("#userId_").append($p);	
-		}
-	}
 	$("#password_2").keyup(e=>{
 		const password=$("#password_").val();
 		const passwordCheck=$(e.target).val();
