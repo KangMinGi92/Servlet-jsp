@@ -3,6 +3,16 @@
 <%@ page import="com.web.member.dto.MemberDto" %>    
 <%
 	MemberDto loginMember=(MemberDto)session.getAttribute("loginMember");
+	Cookie[] cookies=request.getCookies();
+	String saveId=null;
+	if(cookies!=null){
+		for(Cookie c : cookies){
+			if(c.getName().equals("saveId")){
+				saveId=c.getValue();
+				break;
+			}
+		}
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -19,11 +29,13 @@
 			<h1>HelloMVC</h1>
 			<div class="login-container">
 			<%if(loginMember==null){%>
-				<form id="loginFrm" action="<%=request.getContextPath()%>/login.do">
+				<form id="loginFrm" action="<%=request.getContextPath()%>/login.do"
+				method="post" onsubmit="return fn_validataion();">
 					<table>
 						<tr>
 							<td>
-								<input type="text" name="userId" id="userId" placeholder="아이디">
+								<input type="text" name="userId" id="userId" 
+								placeholder="아이디" value="<%=saveId!=null?saveId:""%>">
 							</td>
 						</tr>
 						<tr>
@@ -36,14 +48,17 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" name="saveId" id="saveId">
+								<input type="checkbox" name="saveId" id="saveId" 
+								<%=saveId!=null?"checked":"" %>>
 								<label for="saveId">아이디저장</label>
-								<input type="button" value="회원가입">
+								<input type="button" value="회원가입" 
+								onclick="location.assign('<%=request.getContextPath()%>/member/enrollMember.do')">
 							</td>
 						</tr>
 					</table>
 				</form>
 				<%}else{%>
+			
 					<table id="logged-in">
 						<tr>
 							<td colspan="2">
@@ -55,10 +70,13 @@
 								<input type="button" value="내 정보보기">
 							</td>
 							<td>
-								<input type="button" value="로그아웃">
+								<input type="button" value="로그아웃" onclick="location.replace('<%=request.getContextPath()%>/logout.do')">	
 							</td>
+												
 						</tr>
+					
 					</table>
+
 				<% }%>
 			</div>
 			<nav>
@@ -69,3 +87,17 @@
 				</ul>
 			</nav>
 		</header>
+		<script>
+			const fn_validataion=()=>{
+				const userId=$("#userId").val();
+				if(userId.length<4){
+					alert('아이디는 4글자 이상입니다.');
+					$("#userId").val("");
+					$("#userId").focus();
+					return false;
+				}
+				/* if($("#password").length<8){
+					return false;
+				} */
+			}		
+		</script>

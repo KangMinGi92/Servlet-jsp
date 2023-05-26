@@ -44,6 +44,50 @@ public class MemberDao {
 		}
 		return m;
 	}
+	
+	public int insertMember(Connection conn,MemberDto m) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertMember"));
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getPassword());
+			pstmt.setString(3, m.getUserName());
+			pstmt.setString(4, String.valueOf(m.getGender()));
+			//char를 String으로 형변환 시켜주는 메소드 String.valueof()
+			pstmt.setInt(5, m.getAge());
+			pstmt.setString(6, m.getEmail());
+			pstmt.setString(7, m.getPhone());
+			pstmt.setString(8, m.getAddress());
+			pstmt.setString(9, String.join(",",m.getHobby()));
+			//배열을 String으로 형변환 시켜주는 메소드 String.join()
+			result=pstmt.executeUpdate();
+			return result;
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	public MemberDto selectByUserId(Connection conn,String userId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		MemberDto m=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectByUserId"));
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=getMember(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return m;
+	}
 	private MemberDto getMember(ResultSet rs) throws SQLException{
 		return MemberDto.builder()
 				.userId(rs.getString("userid"))
@@ -59,22 +103,4 @@ public class MemberDao {
 				.build();
 	}
 
-	public void login(Connection conn,String userId, String password) {
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String sql="SELECT *FROM MEMBER WHERE USERID=? AND PASSWORD=?";
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, password);
-			rs=pstmt.executeQuery();
-				if(rs.next()) System.out.println("로그인성공");
-				else System.out.println("로그인실패");
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}
-	}
 }
