@@ -62,7 +62,6 @@ public class MemberDao {
 			pstmt.setString(9, String.join(",",m.getHobby()));
 			//배열을 String으로 형변환 시켜주는 메소드 String.join()
 			result=pstmt.executeUpdate();
-			return result;
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -88,6 +87,45 @@ public class MemberDao {
 			close(pstmt);
 		}return m;
 	}
+	
+	public int updateMember(Connection conn, MemberDto m) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			//UPDATE MEMBER SET USERNAME=?,AGE=?,EMAIL=?,PHONE=?,ADDRESS=?,GENDER=?,HOBBY=?,ENROLLDATE=SYSDATE WHERE USERID=?
+			pstmt=conn.prepareStatement(sql.getProperty("updateMember"));
+			pstmt.setString(1, m.getUserName());
+			pstmt.setInt(2, m.getAge());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getPhone());
+			pstmt.setString(5, m.getAddress());
+			pstmt.setString(6, String.valueOf(m.getGender()));
+			pstmt.setString(7, String.join(",",m.getHobby()));
+			pstmt.setString(8, m.getUserId());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int updatePassword(Connection conn,String userId, String password) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			//updatePassword=UPDATE MEMBER SET PASSWORD=? WHERE USERID=?
+			pstmt=conn.prepareStatement(sql.getProperty("updatePassword"));
+			pstmt.setString(1, password);
+			pstmt.setString(2, userId);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
 	private MemberDto getMember(ResultSet rs) throws SQLException{
 		return MemberDto.builder()
 				.userId(rs.getString("userid"))
