@@ -97,7 +97,7 @@
 			</table>
 			<input type="button" value="비밀번호변경" onclick="fn_updatePasswordEnd();">
 			<input type="submit" value="정보수정">
-			<input type="button" value="탈퇴">
+			<input type="button" value="탈퇴" onclick="deleteMember();">
 		</form>
 	</section>
 	<script>
@@ -129,7 +129,10 @@
 		open("<%=request.getContextPath()%>/member/updatePassword.do"
 				,"_blank","width=400, height=210, left=500, top=200");
 	}
-
+	/*회원 탈퇴 버튼 */
+	const deleteMember=()=>{
+		replace("<%=request.getContextPath()%>/member/deleteMember.do","_blank","width=400, height=200, left=500, top=200");
+	}
 	
 	</script>
 <%@ include file="/views/common/footer.jsp"%>	
