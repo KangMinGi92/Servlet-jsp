@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.web.common.AESEncryptor;
 import com.web.member.dto.MemberDto;
 import com.web.member.service.MemberService;
 

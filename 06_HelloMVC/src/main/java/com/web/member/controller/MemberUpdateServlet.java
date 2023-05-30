@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.web.common.AESEncryptor;
 import com.web.member.dto.MemberDto;
 import com.web.member.service.MemberService;
 
@@ -40,6 +41,17 @@ public class MemberUpdateServlet extends HttpServlet {
 				.address(request.getParameter("address"))
 				.hobby(request.getParameterValues("hobby"))
 				.build();
+		try {
+			m.setEmail(AESEncryptor.encryptData(m.getEmail()));
+		}catch(Exception e) {
+			
+		}
+		try {
+			m.setPhone(AESEncryptor.encryptData(m.getPhone()));
+		}catch(Exception e) {
+			
+		}
+		
 		//2. 회원정보를 수정해줌(DB에 있는 데이터를...)
 		int result=new MemberService().updateMember(m);
 		//3. 결과를 전송하기
