@@ -125,6 +125,22 @@ public class MemberDao {
 			close(pstmt);
 		}return result;
 	}
+	public int deleteMember(Connection conn, String userId, String password) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			//deleteMember=DELETE FROM MEMBER WHERE USERID=? AND PASSWORD=?;
+			pstmt=conn.prepareStatement(sql.getProperty("deleteMember"));
+			pstmt.setString(1,userId);
+			pstmt.setString(2, password);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
 	
 	private MemberDto getMember(ResultSet rs) throws SQLException{
 		return MemberDto.builder()

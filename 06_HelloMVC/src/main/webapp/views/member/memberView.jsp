@@ -128,18 +128,19 @@
 	}else{
 		$("#gender1").prop("checked",true);
 	} --%>
-	/*비밀번호변경 버튼 클릭 시 새창 오픈*/
 	const fn_updateMember=()=>{
 		//form전송하기
 		$("#memberFrm").attr("action","<%=request.getContextPath()%>/member/updateEndMember.do").submit();
 	}
+	/*비밀번호변경 버튼 클릭 시 새창 오픈*/
 	const fn_updatePassword=()=>{
 		open("<%=request.getContextPath()%>/member/updatePassword.do?userId=<%=infoMember.getUserId()%>"
 				,"_blank","width=400, height=210, left=500, top=200");
 	}
 	/*회원 탈퇴 버튼 */
 	const deleteMember=()=>{
-		replace("<%=request.getContextPath()%>/member/deleteMember.do","_blank","width=400, height=200, left=500, top=200");
+		replace("<%=request.getContextPath()%>/member/deleteMember.do?userId=<%=infoMember.getUserId()%>"
+				,"_blank","width=400, height=200, left=500, top=200");
 	}
 	
 	</script>

@@ -3,7 +3,6 @@
 <%@ page import="com.web.member.dto.MemberDto" %> 
 <%
 	MemberDto loginMember=(MemberDto)session.getAttribute("loginMember");
-	String password=String.valueOf(loginMember.getPassword());
 %>
 <!DOCTYPE html>
 <html>

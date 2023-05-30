@@ -36,11 +36,6 @@ public class MemberLoginServlet extends HttpServlet {
 		//1.클라이언트가 보낸 데이터를 가져옴(userId,password)
 		String userId=request.getParameter("userId");
 		String password=request.getParameter("password");
-		try {
-			password=AESEncryptor.decryptData(password);
-		}catch(Exception e) {
-			
-		}
 		System.out.println(userId+" : "+password);
 		
 		//아이디 저장 로직처리 (*로직처리 순서 페이지 전환하는 response가 응답하기전에 쿠기를 먼저 저장시켜줘야한다!)
