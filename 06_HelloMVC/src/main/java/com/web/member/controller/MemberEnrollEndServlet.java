@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.web.common.AESEncryptor;
 import com.web.member.dto.MemberDto;
 import com.web.member.service.MemberService;
 
@@ -36,18 +37,20 @@ public class MemberEnrollEndServlet extends HttpServlet {
 		String userName=request.getParameter("userName");
 		int age=Integer.parseInt(request.getParameter("age"));
 		String email=request.getParameter("email");
+		try {
+			email=AESEncryptor.encryptData(email);
+		}catch(Exception e) {
+			System.out.println("email 암호화실패");
+		}
 		String phone=request.getParameter("phone");
+		try {
+			phone=AESEncryptor.encryptData(phone);
+		}catch(Exception e) {
+			System.out.println("phone 암호화실패");
+		}
 		String address=request.getParameter("address");
 		String gender=request.getParameter("gender");
 		String[] hobbies=request.getParameterValues("hobby");
-		/*
-		 * System.out.println(userId); System.out.println(password);
-		 * System.out.println(userName); System.out.println(age);
-		 * System.out.println(email); System.out.println(phone);
-		 * System.out.println(address); System.out.println(gender);
-		 * System.out.println(Arrays.toString(hobbies));
-		 */
-		
 		MemberDto m=MemberDto.builder().
 				userId(userId).
 				password(password).
@@ -59,6 +62,12 @@ public class MemberEnrollEndServlet extends HttpServlet {
 				address(address).
 				hobby(hobbies).
 				build();
+		
+//		try {
+//			m.setEmail(AESEncryptor.encryptData(m.getEmail()));
+//		}catch(Exception e) {
+//			
+//		}
 	int result=new MemberService().insertMember(m);
 	String msg="",loc="";
 	if(result>0) {

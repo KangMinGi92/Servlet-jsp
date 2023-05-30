@@ -4,13 +4,6 @@
 <%
 	MemberDto loginMember=(MemberDto)session.getAttribute("loginMember");
 	String password=String.valueOf(loginMember.getPassword());
-	
-	String result=String.valueOf(request.getAttribute("result"));
-	String msg=(String)request.getAttribute("msg");
-	String loc=(String)request.getAttribute("loc");
-	System.out.println(result);
-	System.out.println(msg);
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -52,8 +45,9 @@
 				</tr>
 				<tr>
 					<td colspan="2">
+						<input type="hidden" name="userId" value="<%=request.getParameter("userId")%>">
 						<input type="submit" value="변경" onclick="return passwordCheck();">&nbsp;
-						<input type="button" value="닫기" onclick="inputPassword();">						
+						<input type="button" value="닫기" onclick="window.close();">						
 					</td>
 				</tr>
 			</table>
@@ -75,18 +69,12 @@
 		}
 	}
 	
-	/*비밀번호 변경 새창에 입력된값 비밀번호,비밀번호 확인 value 에 대입*/
+/* 비밀번호 변경 새창에 입력된값 비밀번호,비밀번호 확인 value 에 대입
 	const inputPassword=()=>{
 		opener.document.getElementById("password_").value=document.getElementById("password_new").value;
 		opener.document.getElementById("password_2").value=document.getElementById("password_chk").value;	
 		close();
-	}
-	
-	/*비밀번호 변경 완료시 알림창*/
-	if(<%=result%>>0){
-		alert("<%=msg%>");
-	}else if(<%=result%><0){
-		alert("<%=msg%>");
-	}	
+	} */
+
 </script>
 </html>

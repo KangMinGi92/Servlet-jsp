@@ -4,7 +4,6 @@
 <% 
 	MemberDto infoMember=(MemberDto)request.getAttribute("infoMember");
 	String[] checkData=new String[5];
-	loginMember.getUserId();
 	if(infoMember.getHobby()!=null){
 		for(String h : infoMember.getHobby()){
 			switch(h){
@@ -116,7 +115,7 @@
 					</td>
 				</tr>
 			</table>
-			<input type="button" value="비밀번호변경" onclick="fn_updatePasswordEnd();">
+			<input type="button" value="비밀번호수정" onclick="fn_updatePassword();">
 			<input type="button" value="정보수정" onclick="fn_updateMember();">
 			<input type="button" value="탈퇴" onclick="deleteMember();">
 		</form>
@@ -134,8 +133,8 @@
 		//form전송하기
 		$("#memberFrm").attr("action","<%=request.getContextPath()%>/member/updateEndMember.do").submit();
 	}
-	const fn_updatePasswordEnd=()=>{
-		open("<%=request.getContextPath()%>/member/updatePassword.do"
+	const fn_updatePassword=()=>{
+		open("<%=request.getContextPath()%>/member/updatePassword.do?userId=<%=infoMember.getUserId()%>"
 				,"_blank","width=400, height=210, left=500, top=200");
 	}
 	/*회원 탈퇴 버튼 */

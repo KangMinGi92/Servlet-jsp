@@ -49,7 +49,7 @@ public class MemberUpdateServlet extends HttpServlet {
 			msg="회원정보가 수정되었습니다.";
 			loc="/";
 			HttpSession session=request.getSession();
-			session.setAttribute("loginMember",m);
+			session.setAttribute("loginMember",new MemberService().selectByUserId(m.getUserId()));
 		}else {
 			//변경 실패
 			msg="회원정보 수정실패하였습니다. 다시시도하세요";

@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.web.common.AESEncryptor;
 import com.web.member.dto.MemberDto;
 import com.web.member.service.MemberService;
 
-@WebServlet("/member/memberView.do")
+@WebServlet(name="memberView", urlPatterns ="/member/memberView.do")
 public class MemberViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,6 +28,17 @@ public class MemberViewServlet extends HttpServlet {
 		String userId=request.getParameter("userId");
 		//1. DB에서 로그인한 회원의 정보를 가져와서 화면에 전달.
 		MemberDto m=new MemberService().selectByUserId(userId);
+		try {
+			m.setEmail(AESEncryptor.decryptData(m.getEmail()));
+		}catch(Exception e) {
+			
+		}
+		try {
+			m.setPhone(AESEncryptor.decryptData(m.getPhone()));
+		}catch(Exception e) {
+			
+		}
+		
 		request.setAttribute("infoMember", m);
 		//2. 화면에서 전달받은 회원데이터 출력
 		
