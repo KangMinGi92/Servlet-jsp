@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp"%>
+<%@ include file="/views/common/header.jsp" %>
 <body>
 	<section id=enroll-container>
 		<h2>회원 가입 정보 입력</h2>
