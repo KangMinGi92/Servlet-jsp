@@ -16,18 +16,6 @@
 		}
 	}
 
-/*내가 처음에 만들었던 자료 */
-/* 	String userId="";
-	if(cookies!=null){
-		for(Cookie c : cookies){
-			if(c.getName().equals("saveId")){
-				userId=c.getValue();
-				break;
-			}
-		}
-	}
-	String gender=String.valueOf(loginMember.getGender()); */
-	
 %>
 <section id=enroll-container>
 		<h2>회원 정보 수정</h2>
@@ -139,7 +127,7 @@
 	}
 	/*회원 탈퇴 버튼 */
 	const deleteMember=()=>{
-		replace("<%=request.getContextPath()%>/member/deleteMember.do?userId=<%=infoMember.getUserId()%>"
+		open("<%=request.getContextPath()%>/member/deleteMember.do?userId=<%=infoMember.getUserId()%>"
 				,"_blank","width=400, height=200, left=500, top=200");
 	}
 	
