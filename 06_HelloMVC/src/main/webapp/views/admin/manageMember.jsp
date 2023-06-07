@@ -52,7 +52,7 @@
         		<option value="gender" >성별</option>
         	</select>
         	<div id="search-userId">
-        		<form action="<%=request.getContextPath()%>/admin/searchMember">
+        		<form action="<%=request.getContextPath()%>/admin/searchMember.do">
         			<input type="hidden" name="searchType" value="userId" >
         			<input type="text" name="searchKeyword" size="25" 
         			placeholder="검색할 아이디를 입력하세요" >
@@ -60,7 +60,7 @@
         		</form>
         	</div>
         	<div id="search-userName">
-        		<form action="<%=request.getContextPath()%>/admin/searchMember">
+        		<form action="<%=request.getContextPath()%>/admin/searchMember.do">
         			<input type="hidden" name="searchType" value="userName">
         			<input type="text" name="searchKeyword" size="25" 
         			placeholder="검색할 이름을 입력하세요">
@@ -68,7 +68,7 @@
         		</form>
         	</div>
         	<div id="search-gender">
-        		<form action="<%=request.getContextPath()%>/admin/searchMember">
+        		<form action="<%=request.getContextPath()%>/admin/searchMember.do">
         			<input type="hidden" name="searchType" value="gender">
         			<label><input type="radio" name="searchKeyword" value="M" >남</label>
         			<label><input type="radio" name="searchKeyword" value="F" >여</label>

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.web.common.JDBCTemplate;
@@ -74,5 +75,48 @@ public class AdminDao {
 			close(pstmt);
 		}return result;
 	}
-
+	
+	public List<MemberDto> checkMemberType(Connection conn,int cPage,int numPerpage,Map map){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=this.sql.getProperty("checkMemberType");
+		sql=sql.replace("#TYPE",(String)map.get("type"));
+		List<MemberDto> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,"%"+(String)map.get("keyword")+"%");
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getMember(rs)); //getMember는 MemberDao에 있는 메소드를 스태틱으로 선언해서 불러옴
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	public int selectMemberCountType(Connection conn, Map map) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql=this.sql.getProperty("selectMemberCountType");
+		sql=sql.replace("#TYPE",(String)map.get("type"));
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,"%"+(String)map.get("keyword")+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1); //DB에 count(*)조회결과가 컬럼 하나이기 때문에 1로 불러온다 sql문에 AS로 컬럼명을 부여해서 불러와도 된다.!!
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+	}
 }

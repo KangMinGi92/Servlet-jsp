@@ -2,48 +2,53 @@ package com.web.admin.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.web.admin.model.service.AdminService;
 import com.web.member.dto.MemberDto;
 
-@WebServlet("/admin/memberList.do")
-public class MemberListServlet extends HttpServlet {
+/**
+ * Servlet implementation class SearchMember
+ */
+@WebServlet("/admin/searchMember.do")
+public class SearchMember extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public MemberListServlet() {
+    public SearchMember() {
         super();
        
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//DB의 member테이블에 저장된 전체 회원을 가져와 화면에 출력해주는 기능
-		
-		//페이징 처리하기
+		String searchType=request.getParameter("searchType");
+		System.out.println(searchType);
+		String searchKeyword=request.getParameter("searchKeyword");
+		System.out.println(searchKeyword);
+		Map map=Map.of("type",searchType,"keyword",searchKeyword);
 		int cPage;
 		try {
+
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {
 			cPage=1;
 		}
 		int numPerpage=5;
 		
-		
 		//1. DB에서 member테이블에 있는 데이터 가져오기
-		List<MemberDto> list=new AdminService().checkMemberAll(cPage,numPerpage);
+		List<MemberDto> list=new AdminService().checkMemberType(cPage,numPerpage,map);
 		list.forEach(e->System.out.println(e)); //list불러온값 확인
 		//2. DB에서 가져온 데이터 저장(화면출력)
 		request.setAttribute("checkMemberAll", list);
 		//3. 페이지바를 구성
 		// 1) DB에 저장된 전체 데이터의 수를 가져오기
-		int totalData=new AdminService().selectMemberCount();
+		int totalData=new AdminService().selectMemberCountType(map);
+		System.out.println(totalData);
 		// 2) 전체페이지수를 계산하기
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		//(double)로 형변환 해서 소수점 계산 해주고 Math.ceil을 이용해서 올림처리 한 후 (int)로 형변환
@@ -57,7 +62,8 @@ public class MemberListServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar+="<span>[이전]</span>";
 		}else {
-			pageBar+="<a href='"+request.getRequestURI()+"?cPage="+(pageNo-1)+"'>[이전]</a>";
+			pageBar+="<a href='"+request.getRequestURI()
+			+"?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
 		//선택할 페이지 번호 출력하기
@@ -65,7 +71,8 @@ public class MemberListServlet extends HttpServlet {
 			if(pageNo==cPage) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>"+pageNo+"</a>";
+				pageBar+="<a href='"+request.getRequestURI()
+				+"?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
@@ -73,20 +80,20 @@ public class MemberListServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-			pageBar+="<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>[다음]</a>";
+			pageBar+="<a href='"+request.getRequestURI()
+			+"?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>[다음]</a>";
 		}
 		request.setAttribute("pageBar",pageBar);
 		
-		
-		
-		
-		
 		//5. 출력할 화면을 선택(이동)
 		request.getRequestDispatcher("/views/admin/manageMember.jsp").forward(request, response);
+		
+		
 	}
 
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		doGet(request, response);
 	}
 
