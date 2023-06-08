@@ -1,6 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.web.board.model.vo.Board, java.util.List" %>
+<%
+	List<Board> boards=(List)request.getAttribute("boards"); 
+%>
+
 <%@ include file="/views/common/header.jsp"%>
+<section id="board-container">
+	<h2>게시판 </h2>
+		<%if(loginMember!=null&&loginMember.getUserId().equals("admin")){%>
+		<form>
+			<input type="button" id="btn-add" value="글쓰기" onclick="location.assign('<%=request.getContextPath()%>/board/insertboardForm.do')">
+		</form>
+		<%}%>	
+	<table id="tbl-board">
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>첨부파일</th>
+			<th>조회수</th>
+		</tr>
+		<%if(boards.isEmpty()){ %>
+		<tr>
+			<td colspan="6">조회된 게시판이 없습니다.</td>
+		</tr>
+		<%}else{
+			for(Board b:boards) {%>
+		<tr>
+			<td><%=b.getBoardNo() %></td>
+			<td>
+				<a href="<%=request.getContextPath()%>/board/boardView.do?no=<%=b.getBoardNo()%>"><%=b.getBoardTitle() %></a>
+			</td>
+			<td><%=b.getBoardWriter() %></td>
+			<td><%=b.getBoardDate() %></td>
+			<td>
+			<%if(b.getBoardRenamedFilename()!=null){%>
+				<img src="<%=request.getContextPath()%>/upload/board/<%=b.getBoardRenamedFilename()%>" width="20">
+			<%}else{%>
+				<span></span>
+			<%} %>
+			</td>
+			<td><%=b.getBoardReadcount() %></td>
+		</tr>
+		<%} 
+		}%>
+	</table>
+
+    <div id="pageBar">
+   	 <%=request.getAttribute("pageBar") %>
+
+    </div>
+
+</section>
 <style>
 	section#board-container{width:600px; margin:0 auto; text-align:center;}
 	section#board-container h2{margin:10px 0;}
@@ -11,33 +64,6 @@
 	/*페이지바*/
 	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(0, 188, 212, 0.3);}
 	div#pageBar span.cPage{color: #0066ff;}
+    }
 </style>
-<section id="board-container">
-	<h2>게시판 </h2>
-	<table id="tbl-board">
-		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>첨부파일</th>
-			<th>조회수</th>
-		</tr>
-		<tr>
-			<td>번호</td>
-			<td>
-				타이틀을 누르면 상세화면으로 이동
-			</td>
-			<td></td>
-			<td></td>
-			<td>
-			첨부파일이 있으면 이미지출력 / 없으면 공란
-			</td>
-			<td></td>
-		</tr>
-	</table>
-    <div id="pageBar">
-    	<%=request.getAttribute("pageBar") %>
-    </div>
-</section>
 <%@ include file="/views/common/footer.jsp"%>
