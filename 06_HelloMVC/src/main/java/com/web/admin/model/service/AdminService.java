@@ -27,15 +27,15 @@ public class AdminService {
 		return result;
 	}
 	
-	public List<MemberDto> checkMemberType(int cPage,int numPerpage, Map map){
+	public List<MemberDto> selectMemberByKeyword(int cPage,int numPerpage, Map map){
 		Connection conn=getConnection();
-		List<MemberDto> list=dao.checkMemberType(conn,cPage,numPerpage,map);
+		List<MemberDto> list=dao.selectMemberByKeyword(conn,cPage,numPerpage,map);
 		close(conn);
 		return list;
 	}
-	public int selectMemberCountType(Map map) {
+	public int selectMemberByKeywordCount(Map map) {
 		Connection conn=getConnection();
-		int result=dao.selectMemberCountType(conn,map);
+		int result=dao.selectMemberByKeywordCount(conn,map);
 		close(conn);
 		return result;
 	}

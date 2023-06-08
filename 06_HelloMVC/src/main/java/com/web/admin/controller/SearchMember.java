@@ -16,7 +16,7 @@ import com.web.member.dto.MemberDto;
 /**
  * Servlet implementation class SearchMember
  */
-@WebServlet("/admin/searchMember.do")
+@WebServlet("/admin/searchMember")
 public class SearchMember extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,28 +26,31 @@ public class SearchMember extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String searchType=request.getParameter("searchType");
-		System.out.println(searchType);
-		String searchKeyword=request.getParameter("searchKeyword");
-		System.out.println(searchKeyword);
-		Map map=Map.of("type",searchType,"keyword",searchKeyword);
-		int cPage;
+		String type=request.getParameter("searchType");
+		System.out.println(type);
+		String keyword=request.getParameter("searchKeyword");
+		System.out.println(keyword);
+		Map map=Map.of("type",type,"keyword",keyword);
+		int cPage,numPerpage;
 		try {
-
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {
 			cPage=1;
 		}
-		int numPerpage=5;
-		
+		try {
+			numPerpage=Integer.parseInt(request.getParameter("numPerpage"));
+		}catch(NumberFormatException e) {
+			numPerpage=10;
+		}
+		System.out.println(numPerpage);
 		//1. DB에서 member테이블에 있는 데이터 가져오기
-		List<MemberDto> list=new AdminService().checkMemberType(cPage,numPerpage,map);
-		list.forEach(e->System.out.println(e)); //list불러온값 확인
+		List<MemberDto> list=new AdminService().selectMemberByKeyword(cPage,numPerpage,map);
+//		list.forEach(e->System.out.println(e)); //list불러온값 확인
 		//2. DB에서 가져온 데이터 저장(화면출력)
 		request.setAttribute("checkMemberAll", list);
 		//3. 페이지바를 구성
 		// 1) DB에 저장된 전체 데이터의 수를 가져오기
-		int totalData=new AdminService().selectMemberCountType(map);
+		int totalData=new AdminService().selectMemberByKeywordCount(map);
 		System.out.println(totalData);
 		// 2) 전체페이지수를 계산하기
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
@@ -63,7 +66,10 @@ public class SearchMember extends HttpServlet {
 			pageBar+="<span>[이전]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURI()
-			+"?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-1)+"'>[이전]</a>";
+			+"?numPerpage"+numPerpage
+			+"&searchType="+type
+			+"&searchKeyword="+keyword
+			+"&cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
 		//선택할 페이지 번호 출력하기
@@ -72,7 +78,10 @@ public class SearchMember extends HttpServlet {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
 				pageBar+="<a href='"+request.getRequestURI()
-				+"?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a>";
+				+"?numPerpage"+numPerpage
+				+"&searchType="+type
+				+"&searchKeyword="+keyword
+				+"&cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
@@ -81,7 +90,10 @@ public class SearchMember extends HttpServlet {
 			pageBar+="<span>[다음]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURI()
-			+"?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>[다음]</a>";
+			+"?numPerpage"+numPerpage
+			+"&searchType="+type
+			+"&searchKeyword="+keyword
+			+"&cPage="+pageNo+"'>[다음]</a>";
 		}
 		request.setAttribute("pageBar",pageBar);
 		

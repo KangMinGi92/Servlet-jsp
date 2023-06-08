@@ -27,14 +27,17 @@ public class MemberListServlet extends HttpServlet {
 		//DB의 member테이블에 저장된 전체 회원을 가져와 화면에 출력해주는 기능
 		
 		//페이징 처리하기
-		int cPage;
+		int cPage,numPerpage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {
 			cPage=1;
 		}
-		int numPerpage=5;
-		
+		try {
+			numPerpage=Integer.parseInt(request.getParameter("numPerpage"));
+		}catch(NumberFormatException e) {
+			numPerpage=10;
+		}
 		
 		//1. DB에서 member테이블에 있는 데이터 가져오기
 		List<MemberDto> list=new AdminService().checkMemberAll(cPage,numPerpage);

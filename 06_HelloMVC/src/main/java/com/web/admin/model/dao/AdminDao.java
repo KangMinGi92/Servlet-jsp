@@ -76,10 +76,10 @@ public class AdminDao {
 		}return result;
 	}
 	
-	public List<MemberDto> checkMemberType(Connection conn,int cPage,int numPerpage,Map map){
+	public List<MemberDto> selectMemberByKeyword(Connection conn,int cPage,int numPerpage,Map map){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql=this.sql.getProperty("checkMemberType");
+		String sql=this.sql.getProperty("selectMemberByKeyword");
 		sql=sql.replace("#TYPE",(String)map.get("type"));
 		List<MemberDto> list=new ArrayList();
 		try {
@@ -99,10 +99,10 @@ public class AdminDao {
 		}
 		return list;
 	}
-	public int selectMemberCountType(Connection conn, Map map) {
+	public int selectMemberByKeywordCount(Connection conn, Map map) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql=this.sql.getProperty("selectMemberCountType");
+		String sql=this.sql.getProperty("selectMemberByKeywordCount");
 		sql=sql.replace("#TYPE",(String)map.get("type"));
 		int result=0;
 		try {
