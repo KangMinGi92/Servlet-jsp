@@ -66,7 +66,7 @@ public class SearchMember extends HttpServlet {
 			pageBar+="<span>[이전]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURI()
-			+"?numPerpage"+numPerpage
+			+"?numPerpage="+numPerpage
 			+"&searchType="+type
 			+"&searchKeyword="+keyword
 			+"&cPage="+(pageNo-1)+"'>[이전]</a>";
@@ -78,7 +78,7 @@ public class SearchMember extends HttpServlet {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
 				pageBar+="<a href='"+request.getRequestURI()
-				+"?numPerpage"+numPerpage
+				+"?numPerpage="+numPerpage
 				+"&searchType="+type
 				+"&searchKeyword="+keyword
 				+"&cPage="+pageNo+"'>"+pageNo+"</a>";
@@ -90,7 +90,7 @@ public class SearchMember extends HttpServlet {
 			pageBar+="<span>[다음]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURI()
-			+"?numPerpage"+numPerpage
+			+"?numPerpage="+numPerpage
 			+"&searchType="+type
 			+"&searchKeyword="+keyword
 			+"&cPage="+pageNo+"'>[다음]</a>";

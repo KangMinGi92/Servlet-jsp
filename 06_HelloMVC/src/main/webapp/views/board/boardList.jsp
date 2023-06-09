@@ -8,11 +8,11 @@
 <%@ include file="/views/common/header.jsp"%>
 <section id="board-container">
 	<h2>게시판 </h2>
-		<%if(loginMember!=null&&loginMember.getUserId().equals("admin")){%>
+	<%if(loginMember!=null){ %>
 		<form>
-			<input type="button" id="btn-add" value="글쓰기" onclick="location.assign('<%=request.getContextPath()%>/board/insertboardForm.do')">
+			<input type="button" id="btn-add" value="글쓰기" onclick='location.assign("<%=request.getContextPath()%>/board/insertboardForm.do")'>
 		</form>
-		<%}%>	
+		<%} %>
 	<table id="tbl-board">
 		<tr>
 			<th>번호</th>
@@ -37,12 +37,11 @@
 			<td><%=b.getBoardDate() %></td>
 			<td>
 			<%if(b.getBoardRenamedFilename()!=null){%>
-				<img src="<%=request.getContextPath()%>/upload/board/<%=b.getBoardRenamedFilename()%>" width="20">
+				<img src="<%=request.getContextPath()%>/images/file.png" width="20">
 			<%}else{%>
-				<span></span>
 			<%} %>
 			</td>
-			<td><%=b.getBoardReadcount() %></td>
+			<td><%=b.getBoardReadcount()%></td>
 		</tr>
 		<%} 
 		}%>
@@ -52,7 +51,6 @@
    	 <%=request.getAttribute("pageBar") %>
 
     </div>
-
 </section>
 <style>
 	section#board-container{width:600px; margin:0 auto; text-align:center;}

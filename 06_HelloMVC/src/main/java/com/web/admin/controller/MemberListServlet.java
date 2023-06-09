@@ -41,7 +41,7 @@ public class MemberListServlet extends HttpServlet {
 		
 		//1. DB에서 member테이블에 있는 데이터 가져오기
 		List<MemberDto> list=new AdminService().checkMemberAll(cPage,numPerpage);
-		list.forEach(e->System.out.println(e)); //list불러온값 확인
+//		list.forEach(e->System.out.println(e)); //list불러온값 확인
 		//2. DB에서 가져온 데이터 저장(화면출력)
 		request.setAttribute("checkMemberAll", list);
 		//3. 페이지바를 구성
@@ -60,7 +60,7 @@ public class MemberListServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar+="<span>[이전]</span>";
 		}else {
-			pageBar+="<a href='"+request.getRequestURI()+"?cPage="+(pageNo-1)+"'>[이전]</a>";
+			pageBar+="<a href='"+request.getRequestURI()+"?numPerpage="+numPerpage+"&cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
 		//선택할 페이지 번호 출력하기
@@ -68,7 +68,7 @@ public class MemberListServlet extends HttpServlet {
 			if(pageNo==cPage) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>"+pageNo+"</a>";
+				pageBar+="<a href='"+request.getRequestURI()+"?numPerpage="+numPerpage+"&cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
@@ -76,7 +76,7 @@ public class MemberListServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-			pageBar+="<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>[다음]</a>";
+			pageBar+="<a href='"+request.getRequestURI()+"?numPerpage="+numPerpage+"&cPage="+pageNo+"'>[다음]</a>";
 		}
 		request.setAttribute("pageBar",pageBar);
 		

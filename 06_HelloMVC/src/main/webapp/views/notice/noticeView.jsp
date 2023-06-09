@@ -19,7 +19,10 @@
            <th>첨부파일</th>
            <td>
           		<%if(n.getFilePath()!=null){ %>
+          		<div id="download-container" onclick="fileDownload('<%=n.getFilePath()%>');"> <!-- 매개변수가 있는 함수를 호출! -->
           			<img src="<%=request.getContextPath()%>/images/file.png" width="20">
+          			<span><%=n.getFilePath()%></span>
+       			</div>
           		<%} %>
            </td>
        </tr>
@@ -38,8 +41,14 @@
        </tr>
        <%} %>
    </table>
+   <script>
+   const fileDownload=(filename)=>{
+	   location.assign("<%=request.getContextPath()%>/fileDownload.do?name="+filename);
+   }
+   </script>
 </section>
 <style>
+div#download-container{cursor:pointer;}
 section#notice-container{width:600px; margin:0 auto; text-align:center;}
 section#notice-container h2{margin:10px 0;}
 table#tbl-notice{width:500px; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }

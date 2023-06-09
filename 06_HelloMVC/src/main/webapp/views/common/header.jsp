@@ -26,7 +26,7 @@
 <body>
 	<div id="container">
 	<header>
-		<h1>HelloMVC</h1>
+		<h1><a href="<%=request.getContextPath()%>/index.jsp" style="text-decoration: none; color:black;">HelloMVC</a></h1>
 		<div class="login-container">
 		<%if(loginMember==null){%>
 			<form id="loginFrm" action="<%=request.getContextPath()%>/login.do"
@@ -81,7 +81,7 @@
 		</div>
 		<nav>
 			<ul class="main-nav">
-				<li class="home"><a href="">Home</a></li>
+				<li class="home"><a href="<%=request.getContextPath()%>/index.jsp">Home</a></li>
 				<li id="notice"><a href="<%=request.getContextPath()%>/notice/noticeList.do">공지사항</a></li>
 				<li id="board"><a href="<%=request.getContextPath()%>/board/boardList.do">게시판</a></li>
 				<%if(loginMember!=null&&loginMember.getUserId().equals("admin")) {%>
