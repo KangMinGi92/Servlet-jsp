@@ -20,9 +20,11 @@
     table#tbl-comment tr td:first-of-type{padding: 5px 5px 5px 50px;}
     table#tbl-comment tr td:last-of-type {text-align:right; width: 100px;}
     table#tbl-comment button.btn-reply{display:none;}
+    table#tbl-comment button.btn-update{display:none;}
     table#tbl-comment button.btn-delete{display:none;}
     table#tbl-comment tr:hover {background:lightgray;}
     table#tbl-comment tr:hover button.btn-reply{display:inline;}
+    table#tbl-comment tr:hover button.btn-update{display:inline;}
     table#tbl-comment tr:hover button.btn-delete{display:inline;}
     table#tbl-comment tr.level2 {color:gray; font-size: 14px;}
     table#tbl-comment sub.comment-writer {color:navy; font-size:14px}
@@ -80,7 +82,7 @@
 	<div id="comment-container">
 			<div class="comment-editor">
 				<form action="<%=request.getContextPath()%>/board/insertComment.do" method="post">
-					<textarea name="content" cols="55" rows="3"></textarea>
+					<textarea name="content" cols="55" rows="3" style="resize: none;"></textarea>
 					<input type="hidden" name="boardRef" value="<%=b.getBoardNo()%>">
 					<input type="hidden" name="level" value="1">
 					<input type="hidden" name="boardCommentWriter" value="<%=loginMember!=null?loginMember.getUserId():""%>">
@@ -91,7 +93,8 @@
 		</div>
 		<table id="tbl-comment">
 			<%if(comments!=null){
-				for(BoardComment bc:comments){%>
+				for(BoardComment bc:comments){
+					if(bc.getLevel()==1){%>
 			<tr class="levle1">
 				<td>
 					<sub class="comment-writer"><%=bc.getBoardCommentWriter()%></sub>
@@ -100,13 +103,26 @@
 					<%=bc.getBoardCommentContent()%>
 				</td>
 				<td>
-					<button class="btn-reply">답글</button>
-					<button class="btn-reply">수정</button>
-					<button class="btn-reply">삭제</button>
+					 <%if(loginMember!=null){%>
+					<button class="btn-reply" value="<%=bc.getBoardCommentNo()%>">답글</button>
+					<button class="btn-update">수정</button>
+					<button class="btn-delete">삭제</button>
+					<%} %>
 				</td>
 			</tr>
-			<%} 
+			<%}else{%>
+				<tr class="level2">
+				<td>
+					<sub class="comment-writer"><%=bc.getBoardCommentWriter()%></sub>
+					<sub class="comment-date"><%=bc.getBoardCommentDate()%></sub>
+					<br>
+					<%=bc.getBoardCommentContent()%>
+				</td>
+				<td></td>
+			</tr>
+			<%}
 			}%>
+			<%}%>
 		</table>
 </section>
 <script>
@@ -115,6 +131,23 @@
 			alert("로그인 후 이용할 수 있습니다.");
 			$("#userId").focus();
 		}
+	});
+	$(".btn-reply").click(e=>{
+		const tr=$("<tr>");
+		const td=$("<td>").attr("colspan","2");
+		const boardCommentRef=$(e.target).val();
+		console.log(boardCommentRef);
+		const form=$(".comment-editor>form").clone();
+		form.find("textarea").attr("rows","1");
+		form.find("input[name=level]").val("2");
+		form.find("input[name=boardCommentRef]").val(boardCommentRef);
+		td.css("display","none");
+		td.append(form);
+		tr.append(td);
+		/* $(e.target).parents("tr").after(tr.children("td").slideDown(800)); */
+		/* $(e.target).parents("tr").after(tr); */
+		tr.insertAfter($(e.target).parents("tr")).children("td").slideDown(800);
+		$(e.target).off("click");
 	});
 </script>
 <%@ include file="/views/common/footer.jsp" %>
