@@ -1,6 +1,7 @@
 package com.ajax.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -39,8 +40,6 @@ public class GsonTestServlet extends HttpServlet {
 			System.out.println(names.nextElement());
 		}
 		
-		
-		
 		Map map=Map.of("type","userId","keyword","a");
 		List<MemberDto> list=new AdminService().selectMemberByKeyword(1, 30, map);
 		MemberDto m=list.get(0);
@@ -51,7 +50,10 @@ public class GsonTestServlet extends HttpServlet {
 		response.setContentType("application/json;charset=utf-8");
 		//gson.toJson(m,response.getWriter());
 		gson.toJson(list,response.getWriter());
-		//gson.from
+		//gson.fromJson(); vo객체로 만들어줌 ->JSON 형태로 전송된 데이터를....
+		String data=request.getParameter("data");
+		MemberDto requestData=gson.fromJson(data,MemberDto.class);
+		System.out.println(requestData);
 		
 		
 		
