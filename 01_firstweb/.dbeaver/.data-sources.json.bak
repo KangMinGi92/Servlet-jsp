@@ -64,7 +64,7 @@
 		"oracle_thin-1889379a179-5a098dbb9259b754": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "localhost",
+			"name": "TEST",
 			"save-password": true,
 			"configuration": {
 				"host": "localhost",
