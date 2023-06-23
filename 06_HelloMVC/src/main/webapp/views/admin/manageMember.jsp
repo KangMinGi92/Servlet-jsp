@@ -136,7 +136,7 @@
 
             </tbody>
         </table>
-        <div id="pageBar">
+        <div id="m-pageBar">
         	<%=request.getAttribute("pageBar") %>
         </div>
 

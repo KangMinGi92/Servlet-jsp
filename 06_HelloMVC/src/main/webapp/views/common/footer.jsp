@@ -5,4 +5,13 @@
 </footer>
 	</div>
 </body>
+<style>
+	footer{
+		background-color:cornflowerblue;
+		clear:both;
+		height:75px;
+		text-align:center;
+		padding-top:40px;
+	}
+</style>
 </html>

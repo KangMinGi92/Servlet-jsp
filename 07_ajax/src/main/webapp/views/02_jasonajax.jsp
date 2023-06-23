@@ -62,8 +62,8 @@
 		
 		$("#jsonBtn").click(e=>{
 			$.get("<%=request.getContextPath()%>/basicJson.do",
-				function(data){
-				/* console.log(data.userId);
+	/* 			function(data){
+				console.log(data.userId);
 				console.log(data["age"]);
 				if(data.flag){
 					alert("실행!");
