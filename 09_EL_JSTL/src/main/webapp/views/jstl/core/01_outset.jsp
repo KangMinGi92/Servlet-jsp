@@ -26,7 +26,7 @@
 		<li>scope : 변수가 선언될 내장객체를 지정, request,session,application</li>
 	</ul>
 	<ul>c:out 태그속성
-		<li>value : 출력될 데이터, EL표현식, 리터럴을 사용</li>
+		<li>value : 출력될 데이터 / EL표현식, 리터럴을 사용</li>
 		<li>default : 출력될 데이터가 없을때 대체로 출력하는 값</li>
 		<li>escapeXml : value속성에 태그형식으로 작성했을때 태그로 해석할지 여부를 선택</li>
 	</ul>
@@ -51,6 +51,7 @@
 	<div><c:out value="${testData }"/></div>
 	<div><c:out value="${testData }" escapeXml="true"/></div> 
 	<!--escapeXml은 자바스크립트에서 html로 데이터를 읽을지 아니면 innertext로 읽을지 처리하는거와 동일한 옵션  -->
+	<!--escapeXml값이 false면 태그로 해석하고,true면 text로 해석하는 옵션  -->
 	
 	<p>${test11==null?"없음":test11 }</p>
 	<c:set var="test11" value="있는값"/>
