@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+	<properties resource="driver.properties"></properties>
+	<!--jdbc에서 넘어온값이 null이면 자바에서 NULL로 인식하게 하는 setting값  -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.web.board.model.vo.Board" alias="board"/>
+		<typeAlias type="com.web.board.model.vo.BoardComment" alias="comment"/>
+		<typeAlias type="com.web.member.dto.MemberDto" alias="member"/>
+	</typeAliases>
+ 	<environments default="web">
+ 		<environment id="web">
+ 			<transactionManager type="JDBC"/>
+ 			<dataSource type="POOLED">
+			<property name="driver" value="${driver}"/>
+			<property name="url" value="${url}"/>
+			<property name="username" value="${user}"/>
+			<property name="password" value="${pw}"/>
+ 			</dataSource>
+ 		</environment>
+ 	</environments>
+	<mappers>
+		<mapper resource="/mappers/member-mapper.xml"></mapper>
+		<mapper resource="/mappers/board-mapper.xml"></mapper>
+ 	</mappers>
+ </configuration>
